@@ -21,8 +21,34 @@ class PostController extends Controller
 //send email
   public function   sendemail(){
 
-    return view ('email.sendemail');
+   return view ('email.sendemail');
+ 
   }
+
+   public function sendee(Request $request)
+   {
+
+   /*  $request->validate([
+      'name' => 'required|string|max:255',
+      'email' => 'required|email|max:255',
+      'message' => 'required|string',
+
+  $name = $request->name;
+$from =$request->email;
+$list_name =$request->message;
+  
+foreach($list_name as $name=>$email)
+{
+    Mail::to($email)->send(new TestMail(compact('mohammad','aboyassercamera@gmail.com')));
+
+
+dd('email send secessfuly');
+});
+   
+    */
+     
+
+   }
 
 
   
@@ -209,6 +235,7 @@ return view('posts.create');
 
     public function storee(){
 
+      
       $data = request()->all();
       $id = request()->id;
       $name = request()->name;
@@ -223,10 +250,44 @@ return view('posts.create');
 
 
     }
+    public function stors(Request $request)
+    {
+  
+      $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+        // التحقق من وجود صورة في الطلب
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+          
+            // حفظ الصورة في مجلد public/images
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+       
+            // يمكنك هنا حفظ اسم الصورة في قاعدة البيانات إذا أردت
+            // Example: $user->image = $imageName;
+            // $user->save();
+            $data = request()->all();
+            $id = request()->id;
+            $image = request()->image;
+            $job = request()->job;
+            $phone = request()->phone;
+            $post1 = request()->post1;
+            $post = new Post;
+            $post->name = $imageName;
+            $post->job = $job;
+            $post->phone = $phone;
+            $post->post1 = $post1;
+    
+          $post->save();// insert into posts ('t','d')
+            return to_route('posts.index');
+        }
+
+        return redirect()->back()->with('error', 'لم يتم رفع أي صورة.');
+    }
     public function store()
     {
-      
-
+    
         //1- get the user data
         $data = request()->all();
         $id = request()->id;
@@ -309,8 +370,8 @@ public function updatee(Request $request, $id){
     public function udpost($id)
     {
 
-      return ($request);
-      /*$student = Post::find($id);
+    
+    $student = Post::find($id);
       $student->name = $request->input('name');
       $student->job = $request->input('job');
       $student->phone = $request->input('phone');
@@ -319,7 +380,7 @@ public function updatee(Request $request, $id){
      //$post = Post::find($id);ss
       //$post->update($request->all());
       return redirect()->route('posts.index')
-        ->with('success', 'Post updated successfully.');*/
+        ->with('success', 'Post updated successfully.');
     }
     public function destroy($id)
     {

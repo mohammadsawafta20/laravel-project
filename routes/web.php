@@ -11,14 +11,18 @@ Route::get('/', function () {
     return view('welcome');
     
 });
-Route::get('/send',[Postcontroller::class ,'sendemail']);
-
-Route::get('/email',function(){
+Route::get('/test', function () {
+    return 'test';
+    
+});
+Route::get('/senddd',[Postcontroller::class ,'sendemail'])->name('email.sendemail');
+Route::post('/senddd',[Postcontroller::class ,'sendee'])->name('email.sendee');
+Route::get('/emaill',function(){
 $name = "mohammad";
 $from = "laravel 11 mail"; 
 $list_name =[
    "mohammad"=>"hamzeabo255@gmail.com",
-    "hamzeh"=>"sawafta123456@gmail.com"
+    "yasser"=>"aboyassercamera@gmail.com"
 ];
     
 foreach($list_name as $name=>$email)
@@ -78,7 +82,7 @@ Route::get('/posts/showstore/',[PostController::class, 'showstore'])->name('post
 Route::get('/posts/regester',[Postcontroller::class ,'regester'])->name ('posts.regester');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 
-Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+Route::post('/posts/store', [PostController::class, 'stors'])->name('posts.store');
 Route::post('/posts/storee', [PostController::class, 'storee'])->name('posts.storee');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 

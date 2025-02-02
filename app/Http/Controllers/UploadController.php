@@ -23,6 +23,7 @@ return view ('uploade.edit',['post'=>$post]);
 
     public function store(Request $request): RedirectResponse
     {
+       
         $request->validate([
          
             'file_upload' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
